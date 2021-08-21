@@ -1,8 +1,9 @@
 import React from 'react';
-import './footerComponent.css'
 
 export const FooterComponent = () => (
-    <div>
-        footer
-    </div>
+    <footer className="d-flex justify-content-center navbar">
+        <p className='text-secondary'>
+            Developed by Sergey Kremenchugsky 2021.
+        </p>
+    </footer>
 )

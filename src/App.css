@@ -1,0 +1,67 @@
+.app {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app.dark {
+    background: #282c34;
+    color: white;
+}
+
+.main {
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+}
+
+.nav-link.active {
+    color: blueviolet !important;
+    border-bottom: 1px solid blueviolet;
+    background-color: rgba(138, 43, 226, 0.1);
+    border-radius: 5px;
+}
+
+.card {
+    position: unset !important;
+}
+
+.app.dark .card {
+    background: #343a40;
+    border: 1px solid rgba(0, 0, 0, .875);
+}
+
+.app.light .card {
+    background: #f8f9fa;
+}
+
+.btn-outline-primary {
+    background-color: transparent !important;
+    border: solid 1px blueviolet !important;
+    color: blueviolet !important;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited {
+    background-color: blueviolet !important;
+    border: solid 1px blueviolet !important;
+    color: white !important;
+}
+
+.btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
+    box-shadow: 0 0 0 0.25rem rgba(138, 43, 226, 0.5) !important;
+}
+
+/*----- scroll -------------*/
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
