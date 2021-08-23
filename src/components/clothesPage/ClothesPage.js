@@ -10,7 +10,6 @@ export const ClothesPage = () => {
     const {path} = useParams()
     const {data} = useSelector(state => state.appState)
     const [searchVal, setSearchVal] = useState('')
-    const [notFound, setNotFound] = useState(false)
     const [items, setItems] = useState([])
 
     useEffect(() => {
@@ -19,20 +18,21 @@ export const ClothesPage = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
-        notFound && setNotFound(false)
-        const items = data.filter((i) => i.type === path)
-        const searchedItems = items.filter(i =>
-            i.name.startsWith(searchVal) ||
-            i.brand.startsWith(searchVal) ||
-            i.sizes.map(s => s.toString()).includes(searchVal) ||
-            i.colors.includes(searchVal));
+        const val = searchVal.toLowerCase()
+        const itemsData = data.filter((i) => i.type === path)
+        const searchedItems = itemsData.filter(i =>
+            i.name.startsWith(val) ||
+            i.brand.startsWith(val) ||
+            i.sizes.map(s => s.toString()).includes(val) ||
+            i.colors.includes(val)
+        )
 
         if (searchedItems.length) {
-            searchVal.length < 2 && searchedItems.length > 5
-                ? setItems(searchedItems.slice(5))
+            val.trim().length < 2 && searchedItems.length > 5
+                ? setItems(searchedItems.slice(0, 5))
                 : setItems(searchedItems)
         } else {
-            setNotFound(true)
+            setItems(searchedItems)
         }
     }
 
@@ -48,8 +48,11 @@ export const ClothesPage = () => {
                 <Form className='w-100' onSubmit={onSubmitHandler}>
                     <Row className='w-100 d-flex justify-content-center'>
                         <Col xs={7}>
-                            <Form.Control placeholder="Search..." size='sm' value={searchVal}
-                                          onChange={(e) => setSearchVal(e.target.value.toLowerCase())}/>
+                            <Form.Control
+                                placeholder="Search..."
+                                size='sm'
+                                value={searchVal}
+                                onChange={(e) => setSearchVal(e.target.value)}/>
                         </Col>
                         <Col xs={1}>
                             <Button variant='outline-primary' type='submit' size='sm'>Search</Button>

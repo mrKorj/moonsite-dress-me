@@ -14,6 +14,18 @@ export const hideAlert = () => {
     return {type: actionTypes.HIDE_ALERT}
 }
 
+export const completeSet = () => {
+    return {type: actionTypes.COMPLETE_SET}
+}
+
+export const startNewSet = () => {
+    return {type: actionTypes.START_NEW_SET}
+}
+
+export const stopTimer = () => {
+    return {type: actionTypes.START_NEW_SET}
+}
+
 export const changeTheme = (theme) => {
     return {
         type: actionTypes.CHANGE_THEME,

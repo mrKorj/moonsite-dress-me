@@ -11,9 +11,10 @@ import {FooterComponent} from "./components/footer/FooterComponent";
 import 'react-notifications-component/dist/theme.css';
 import './App.css';
 import {apiUrl} from "./localVariables/urls";
+import {CompletePage} from "./components/completePage/CompletePage";
 
 export const App = () => {
-    const {isLoading, theme, completedSets} = useSelector(state => state.appState)
+    const {isLoading, theme, completedSets, timerRunning} = useSelector(state => state.appState)
     const alertState = useSelector(state => state.alertState)
     const dispatch = useDispatch()
     const [timer, setTimer] = useState(0)
@@ -24,10 +25,22 @@ export const App = () => {
         dispatch(getDataFromApi(apiUrl))
     }, [dispatch])
 
+    useEffect(() => {
+        if (timerId.current && !timerRunning) {
+            clearInterval(timerId.current)
+        }
+
+        if (timerRunning) {
+            setTimer(0)
+            timerId.current = setInterval(() => {
+                setTimer(prevState => ++prevState)
+            }, 1000)
+        }
+    }, [timerRunning])
+
 
     useEffect(() => {
         localStorage.setItem('moonsite-shop', JSON.stringify({completedSets, theme}));
-        timerId.current = setInterval(() => {setTimer(prevState => ++prevState)}, 1000)
     }, [completedSets, theme])
 
     useEffect(() => {
@@ -54,12 +67,12 @@ export const App = () => {
                 {
                     isLoading && <Loader/>
                 }
-                <NavBarComponent timer={timer}/>
+                <NavBarComponent/>
                 <div className='container main flex-grow-1'>
                     <Switch>
                         <Route path='/' exact component={HomePage}/>
+                        <Route path='/complete' exact><CompletePage timer={timer}/></Route>
                         <Route path='/:path' component={ClothesPage}/>
-                        <Route path='/complete' component={ClothesPage}/>
                     </Switch>
                     <FooterComponent/>
                 </div>

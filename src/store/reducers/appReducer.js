@@ -6,7 +6,8 @@ const initialState = {
     data: [],
     clothesList: [],
     completedSets: 0,
-    selectedItems: []
+    selectedItems: [],
+    timerRunning: true,
 }
 
 export const appReducer = (state = initialState, action) => {
@@ -22,6 +23,12 @@ export const appReducer = (state = initialState, action) => {
         }
         case actionTypes.GET_DATA_FROM_LOCALSTORAGE: {
             return {...state, ...action.payload}
+        }
+        case actionTypes.COMPLETE_SET: {
+            return {...state, completedSets: state.completedSets + 1, timerRunning: false}
+        }
+        case actionTypes.START_NEW_SET: {
+            return {...state, selectedItems: [], timerRunning: true}
         }
         case actionTypes.GET_DATA_FROM_API: {
             const clothesList = [...new Set(action.payload.results.map(i => i.type))]

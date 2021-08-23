@@ -67,8 +67,13 @@ export const ClothesItem = ({item}) => {
                     choose a color:
                     {
                         [...new Set(item.colors)].map(c => (
-                            <Button size={'sm'} className={'ms-2'} key={c} style={{background: c, color: c === 'white' ? 'black' : null, borderColor: 'blueviolet'}}
-                                    onClick={() => onColorHandler(c)}>{c}</Button>
+                            <Button
+                                size={'sm'}
+                                className={'ms-2'}
+                                key={c}
+                                style={{background: c, color: c === 'white' ? 'black' : null, borderColor: 'blueviolet'}}
+                                onClick={() => onColorHandler(c)}
+                            >{c}</Button>
                         ))
                     }
                 </Card.Text>
@@ -79,7 +84,8 @@ export const ClothesItem = ({item}) => {
                             choose a size:
                             {
                                 item.sizes.map(s => (
-                                    <Button variant='outline-primary' size={'sm'} className={'ms-2'} onClick={() => onSizeHandler(s)} key={s}>{s}</Button>
+                                    <Button variant='outline-primary' size={'sm'} className={'ms-2'} onClick={() => onSizeHandler(s)}
+                                            key={s}>{s}</Button>
                                 ))
                             }
                         </>

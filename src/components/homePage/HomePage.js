@@ -1,13 +1,19 @@
 import React from 'react';
 import {Button} from "react-bootstrap";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import './homePage.css'
 import {useHistory} from "react-router-dom";
+import {completeSet} from "../../store/actions";
 
 export const HomePage = () => {
     const history = useHistory()
     const {clothesList, completedSets, selectedItems} = useSelector(state => state.appState)
+    const dispatch = useDispatch()
 
+    const onCompleteHandler = () => {
+        dispatch(completeSet())
+        history.push('/complete')
+    }
 
     return (
         <div className='home-page'>
@@ -24,10 +30,13 @@ export const HomePage = () => {
                     </div>
                 </div>
                 <div className='home-page-maim-body'>
+                    <div>
+                        <p>Selected <b style={{color: "red"}}>{selectedItems.length}</b> from 3 items.</p>
+                    </div>
                     <div className='d-flex justify-content-center mb-2'>
                         {
                             clothesList.map(i => (
-                                <div className='d-flex flex-column align-items-center p-2'>
+                                <div className='d-flex flex-column align-items-center p-2' key={i}>
                                     <div style={{height: '2rem'}}>
                                         {
                                             selectedItems.find(item => item.type === i) &&
@@ -35,7 +44,6 @@ export const HomePage = () => {
                                         }
                                     </div>
                                     <Button
-                                        key={i}
                                         variant={"outline-primary"}
                                         onClick={() => history.push(i)}
                                     >
@@ -53,7 +61,7 @@ export const HomePage = () => {
                                 ? <Button
                                     variant={"outline-success"}
                                     className='me-6'
-                                    onClick={() => history.push('/complete')}
+                                    onClick={onCompleteHandler}
                                 >
                                     Complete
                                 </Button>
