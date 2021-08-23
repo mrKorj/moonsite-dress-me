@@ -1,7 +1,6 @@
 .clothes-item-card {
     width: 90% !important;
     margin: 1rem;
-    cursor: pointer;
 }
 
 .clothes-item-card:hover {

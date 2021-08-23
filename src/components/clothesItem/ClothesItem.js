@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Card} from "react-bootstrap";
+import {Card, Button} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import './clothesItem.css'
@@ -22,8 +22,6 @@ export const ClothesItem = ({item}) => {
     const onSizeHandler = size => {
         setSize(size)
         setShowModal(true)
-        console.log(item, 'size: ', size, 'color: ', color)
-
     }
 
     const addItemHandler = () => {
@@ -37,7 +35,7 @@ export const ClothesItem = ({item}) => {
         }))
     }
 
-    const onCancelHandler =() => {
+    const onCancelHandler = () => {
         setShowModal(false)
         setShowButtons(false)
         setSize('')
@@ -61,29 +59,32 @@ export const ClothesItem = ({item}) => {
     return (
         <Card className='clothes-item-card'>
             <Card.Body>
-                {/*<Card.Img variant="top" src={`./weatherIcons/${item.WeatherIcon}.png`} alt="pic" width={45}/>*/}
-                <Card.Title className='d-flex justify-content-center text-capitalize'>Brand: {item.brand}</Card.Title>
-                <Card.Text className='d-flex justify-content-center'>
-                    Model name: {item.name}
+                <Card.Text className='d-flex justify-content-center text-capitalize'><span>Brand: <b>{item.brand}</b></span></Card.Text>
+                <Card.Text className='d-flex justify-content-center text-capitalize'>
+                    <span>Model name: <b>{item.name}</b></span>
                 </Card.Text>
-                <Card.Title className='d-flex justify-content-center'>
-                    available colors:
+                <Card.Text className='d-flex justify-content-center'>
+                    choose a color:
                     {
                         [...new Set(item.colors)].map(c => (
-                            <button key={c} style={{background: c}} onClick={() => onColorHandler(c)}>{c}</button>
+                            <Button size={'sm'} className={'ms-2'} key={c} style={{background: c, color: c === 'white' ? 'black' : null, borderColor: 'blueviolet'}}
+                                    onClick={() => onColorHandler(c)}>{c}</Button>
                         ))
                     }
+                </Card.Text>
+                <Card.Text className='d-flex justify-content-center'>
                     {
                         showButtons &&
                         <>
+                            choose a size:
                             {
                                 item.sizes.map(s => (
-                                    <button onClick={() => onSizeHandler(s)} key={s}>{s}</button>
+                                    <Button variant='outline-primary' size={'sm'} className={'ms-2'} onClick={() => onSizeHandler(s)} key={s}>{s}</Button>
                                 ))
                             }
                         </>
                     }
-                </Card.Title>
+                </Card.Text>
             </Card.Body>
             <ModalComponent
                 onHide={addItemHandler}

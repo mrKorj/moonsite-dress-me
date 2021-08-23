@@ -8,12 +8,21 @@
 .clothes-header {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    align-items: center;
 }
 
 .clothes-body {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
     padding: 1rem 0;
+}
+
+.search-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
 }

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {getDataFromApi, getDataFromLocalStorage, hideAlert} from "./store/actions";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,9 +13,11 @@ import './App.css';
 import {apiUrl} from "./localVariables/urls";
 
 export const App = () => {
-    const {isLoading, theme} = useSelector(state => state.appState)
+    const {isLoading, theme, completedSets} = useSelector(state => state.appState)
     const alertState = useSelector(state => state.alertState)
     const dispatch = useDispatch()
+    const [timer, setTimer] = useState(0)
+    const timerId = useRef(null)
 
     useEffect(() => {
         dispatch(getDataFromLocalStorage(JSON.parse(localStorage.getItem('moonsite-shop')) || {}))
@@ -24,8 +26,9 @@ export const App = () => {
 
 
     useEffect(() => {
-        localStorage.setItem('moonsite-shop', JSON.stringify({}));
-    }, [])
+        localStorage.setItem('moonsite-shop', JSON.stringify({completedSets, theme}));
+        timerId.current = setInterval(() => {setTimer(prevState => ++prevState)}, 1000)
+    }, [completedSets, theme])
 
     useEffect(() => {
         if (alertState.isShow) {
@@ -51,7 +54,7 @@ export const App = () => {
                 {
                     isLoading && <Loader/>
                 }
-                <NavBarComponent/>
+                <NavBarComponent timer={timer}/>
                 <div className='container main flex-grow-1'>
                     <Switch>
                         <Route path='/' exact component={HomePage}/>
